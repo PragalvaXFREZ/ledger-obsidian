@@ -8,6 +8,7 @@ import type { TransactionCache } from '../parser';
 import { ISettings } from '../settings';
 import { AccountsList } from './AccountsList';
 import { AccountVisualization } from './AccountVisualization';
+import { AccountSpendingBreakdown } from './AccountSpendingBreakdown';
 import { DateRangeSelector } from './DateRangeSelector';
 import { NetWorthVisualization } from './NetWorthVisualization';
 import { ParseErrors } from './ParseErrors';
@@ -188,6 +189,19 @@ const DesktopDashboard: React.FC<{
                 startDate={startDate}
                 endDate={endDate}
               />
+              {selectedAccounts.some((account) =>
+                account.startsWith(props.settings.expenseAccountsPrefix)
+              ) && (
+                  <AccountSpendingBreakdown
+                    txCache={props.txCache}
+                    startDate={startDate}
+                    endDate={endDate}
+                    currencySymbol={props.settings.currencySymbol}
+                    expensePrefix={props.settings.expenseAccountsPrefix}
+                    assetPrefix={props.settings.assetAccountsPrefix}
+                    liabilityPrefix={props.settings.liabilityAccountsPrefix}
+                  />
+                )}
             </>
           )}
         </FlexMainContent>
